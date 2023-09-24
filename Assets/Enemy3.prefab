@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5668921003365735670}
   - component: {fileID: 8154810740167038883}
   - component: {fileID: 5341309725374369336}
+  - component: {fileID: -7179927895670787996}
   m_Layer: 0
   m_Name: Enemy3
   m_TagString: Enemy
@@ -75,8 +76,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.6415094, g: 0.27153057, b: 0.20879316, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 1b35a7ff3cc606c4fb7babb33050ab5c, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -100,6 +101,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Rows: 1
   Health: 5
+  Damage: 0
+  enemydeath: {fileID: 6187170410749502706, guid: 388ca96f315888d4a853979969d2dde7, type: 3}
 --- !u!61 &5341309725374369336
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -132,7 +135,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.0036243051}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -143,5 +146,26 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 0.73905635}
   m_EdgeRadius: 0
+--- !u!114 &-7179927895670787996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7196899549062018707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c330e1efe152f34ea2c571a6fcb6d37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyType: 3
+  Bullet: {fileID: 7060631697363896525, guid: 5d89f5131e92a61499a0273c0d298051, type: 3}
+  fireOffset: {x: 0, y: -0.3}
+  bulletSpeed: 150
+  Speed: 1
+  Direction: {x: -1, y: 0, z: 0}
+  curMotion: {fileID: 11400000, guid: 1d34488c083318241a6054d84b77ea32, type: 2}
+  bulletLife: 2
+  bulletTime: 0

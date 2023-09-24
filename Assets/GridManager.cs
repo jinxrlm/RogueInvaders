@@ -18,14 +18,30 @@ public class GridManager : MonoBehaviour
 
     [SerializeField] private GameObject[] _enemies;
 
-    public AnimationCurve slideSideways;
-
     public List<GameObject> currentWave = new List<GameObject>();
-    bool isMoving = false;
-    bool isSwitchingRow = false;
+
+    public IntVariable shieldHealth;
+
+    public float Speed = 1.0f;
+
+    public Vector3 Direction = Vector3.left;
+    public Vector3 DirDown = Vector3.down;
+
+    public motionVars curMotion;
+
+    //public AnimationCurve AnimCurve;
+
+    //bool isMoving = false;
+    //bool isSwitchingRow = false;
+    public bool isColliding = false;
     BoxCollider2D LeftEdge;
     BoxCollider2D RightEdge;
-    bool enemyLeft = false;
+    //bool enemyLeft = false;
+
+    public bool CheckCollision()
+    {
+        return isColliding;
+    }
 
     void GenerateGrid()
     {
@@ -52,8 +68,23 @@ public class GridManager : MonoBehaviour
     {
         for (int x = 0; x < 5; x++)
         {
+            var spawnedShield = Instantiate(_shieldPrefab, new Vector3(0.75f + (x * 2.37f), 0.3f), Quaternion.identity);
+            //spawnedShield.name = $"Shield{x}1";
+            spawnedShield.transform.localScale = new Vector3(1.9f, 1.6f, 1f);
+            //spawnedShield.tag = "Shield";
+        }
+        for (int x = 0; x < 5; x++)
+        {
             var spawnedShield = Instantiate(_shieldPrefab, new Vector3(0.75f + (x * 2.37f), 0), Quaternion.identity);
-            spawnedShield.name = $"Shield{x + 1}";
+            //spawnedShield.name = $"Shield{x}2";
+            //spawnedShield.tag = "Shield";
+        }
+        for (int x = 0; x < 5; x++)
+        {
+            var spawnedShield = Instantiate(_shieldPrefab, new Vector3(0.75f + (x * 2.37f), -0.25f), Quaternion.identity);
+            //spawnedShield.name = $"Shield{x}3";
+            spawnedShield.transform.localScale = new Vector3(1f, 1f, 1f);
+            //spawnedShield.tag = "Shield";
         }
     }
 
@@ -72,8 +103,8 @@ public class GridManager : MonoBehaviour
             {
                 for (int x = startTile; x < endTile; x++)
                 {
-                    var spawnedEnemy = Instantiate(_enemies[i], new Vector3(x, (r - curRow)), Quaternion.identity);
-                    spawnedEnemy.name = $"Enemy{i+1} {x} {r}";
+                    var spawnedEnemy = Instantiate(_enemies[i], new Vector3(x, (r - curRow) * 0.9f), Quaternion.identity);
+                    //spawnedEnemy.name = $"Enemy{i+1} {x} {r}";
                     currentWave.Add(spawnedEnemy);
                 }
             }
@@ -82,73 +113,73 @@ public class GridManager : MonoBehaviour
 
     }
 
-    void moveCurrentWave()
-    {
-        if (!isMoving && !isSwitchingRow)
-        {
-            Vector3 eMove = new Vector3(((enemyLeft ? 1 : -1) * 0.1f), 0, 0);
+    //void moveCurrentWave()
+    //{
+    //    if (!isMoving && !isSwitchingRow)
+    //    {
+    //        float eMove = (enemyLeft ? 1 : -1) * 1.0f;
 
-            foreach (GameObject e in currentWave)
-            {
-                //e.transform.position = e.transform.position + (eMove * slideSideways.Evaluate(Time.time));
-                //e.transform.position = new Vector3.Lerp(e.transform.position, e.transform.position + eMove, slideSideways.Evaluate(Time.time);
-                e.transform.position += eMove;
-            }
-            print($"moved: {eMove}");
-            StartCoroutine(enemyMoveTick(1.0f));
-        }
-    }
+    //        foreach (GameObject e in currentWave)
+    //        {
+    //            e.transform.position += eMove * Direction.normalized * Speed * AnimCurve.Evaluate(Time.time) * Time.deltaTime;
+    //        }
+    //        //print($"moved: {eMove}");
+    //        //StartCoroutine(enemyMoveTick(Speed));
+    //    }
+    //}
 
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (!isSwitchingRow && collision.gameObject.name != "ThePlayer")
-        {
-            Vector3 eRowMove = new Vector3(0, -0.5f, 0);
+    //void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (!isSwitchingRow && collision.gameObject.name != "ThePlayer")
+    //    {
+    //        float eRowMove = 0.5f;
 
-            foreach (GameObject e in currentWave)
-            {
-                e.transform.position += eRowMove;
-            }
-            print($"collided w {collision.gameObject.name} | sw. row: {eRowMove}");
-            enemyLeft = !enemyLeft;
+    //        foreach (GameObject e in currentWave)
+    //        {
+    //            e.transform.position += eRowMove * DirDown.normalized * Speed * AnimCurve.Evaluate(Time.time) * Time.deltaTime;
+    //        }
+    //        //print($"collided w {collision.gameObject.name} | sw. row: {eRowMove}");
+    //        enemyLeft = !enemyLeft;
 
-            StartCoroutine(enemyRowTick(1.0f));
-        }
-    }
+    //        //StartCoroutine(enemyRowTick(Speed));
+    //    }
+    //}
 
-    IEnumerator enemyMoveTick(float Tick)
-    {
-        isMoving = true;
-        isSwitchingRow = false;
-        yield return new WaitForSeconds(Tick);
-        isMoving = false;
-        isSwitchingRow = false;
-    }
+    //IEnumerator enemyMoveTick(float Tick)
+    //{
+    //    yield return new WaitForSeconds(Tick * 0.2f);
+    //    isMoving = true;
+    //    isSwitchingRow = false;
+    //    yield return new WaitForSeconds(Tick);
+    //    isMoving = false;
+    //    isSwitchingRow = false;
+    //}
 
-    IEnumerator enemyRowTick(float Tick)
-    {
-        isMoving = false;
-        isSwitchingRow = true;
-        yield return new WaitForSeconds(Tick);
-        isMoving = false;
-        isSwitchingRow = false;
-    }
+    //IEnumerator enemyRowTick(float Tick)
+    //{
+    //    //yield return new WaitForSeconds(Tick * 2.0f);
+    //    isMoving = false;
+    //    isSwitchingRow = true;
+    //    yield return new WaitForSeconds(Tick * 2.0f);
+    //    isMoving = false;
+    //    isSwitchingRow = false;
+    //}
 
     // Start is called before the first frame update
     void Start()
     {
         //GenerateGrid();
         SpawnEnemies();
-        LaserGrid();
+        //LaserGrid();
         ShieldGrid();
         _cam.transform.position = new Vector3((float)_width / 2 - 0.5f, (float)_height / 2 - 0.5f, -10);
-        LeftEdge = GameObject.Find("LeftEdge").GetComponent<BoxCollider2D>();
-        RightEdge = GameObject.Find("RightEdge").GetComponent<BoxCollider2D>();
+        curMotion.curDirection = Vector3.left;
+        curMotion.lockRowShift = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        moveCurrentWave();
+        //moveCurrentWave();
     }
 }

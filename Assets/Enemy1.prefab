@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5281798131068441972}
   - component: {fileID: -7817083777685932153}
   - component: {fileID: 3679666501433129404}
+  - component: {fileID: 1848914474889488416}
   m_Layer: 0
   m_Name: Enemy1
   m_TagString: Enemy
@@ -28,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 7793539138142410528}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -2}
+  m_LocalPosition: {x: -57.010536, y: 0, z: -2}
   m_LocalScale: {x: 0.9, y: 0.9, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 371378105
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5c3a81485b16ea842bbd89c449bf7917, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -98,8 +99,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d8f9794343ea354ba9e133a26fdec9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Rows: 2
+  Rows: 3
   Health: 1
+  Damage: 0
+  enemydeath: {fileID: 6187170410749502706, guid: 388ca96f315888d4a853979969d2dde7, type: 3}
 --- !u!61 &3679666501433129404
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -132,7 +135,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.018636972}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -143,5 +146,26 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 0.49059027}
   m_EdgeRadius: 0
+--- !u!114 &1848914474889488416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7793539138142410528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c330e1efe152f34ea2c571a6fcb6d37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyType: 1
+  Bullet: {fileID: 6205384582818081061, guid: 06b86c69ffc3e8a45a5a2979c8a9519a, type: 3}
+  fireOffset: {x: 0, y: 0}
+  bulletSpeed: 100
+  Speed: 1
+  Direction: {x: -1, y: 0, z: 0}
+  curMotion: {fileID: 11400000, guid: 1d34488c083318241a6054d84b77ea32, type: 2}
+  bulletLife: 3.5
+  bulletTime: 0
